@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.terry.webservice.demo.UserRepository;
 import com.terry.webservice.demo.io.entity.UserEntity;
+import com.terry.webservice.demo.io.repositories.UserRepository;
 import com.terry.webservice.demo.service.UserService;
 import com.terry.webservice.demo.shared.Utils;
 import com.terry.webservice.demo.shared.dto.UserDto;
@@ -54,7 +54,18 @@ public class UserServiceImpl implements UserService {
 		
 		if (userEntity == null) throw new UsernameNotFoundException(email);
 		
-		
 		return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), new ArrayList<>());
+	}
+	
+	@Override
+	public UserDto getUser(String email) {
+		UserEntity userEntity = userRepository.findByEmail(email);
+		
+		if (userEntity == null) throw new UsernameNotFoundException(email);
+		
+		UserDto returnValue = new UserDto();
+		BeanUtils.copyProperties(userEntity, returnValue);
+		
+		return returnValue;
 	}
 }
