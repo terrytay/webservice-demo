@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.terry.webservice.demo.security.AppProperties;
-import com.terry.webservice.demo.service.impl.UserServiceImpl;
 
 @SpringBootApplication
 public class DemoApplication {
